@@ -6,6 +6,7 @@ app.controller("CardController", function($scope, $timeout) {
 	var breakRow = '';
 	var BlockedFilled = [];
 	var timer = null;
+	$scope.displaylife = 0;
 	$scope.gameAttamp = false; 
 	$scope.timeLimit = 100;
 	$scope.isCritical = false;
@@ -83,10 +84,11 @@ app.controller("CardController", function($scope, $timeout) {
 		}
 		return arr;
 	}
-
+	//  Init function
 	$scope.init = function(){
 		if($scope.gridCol != undefined && $scope.blockFill != undefined){
 			$scope.getStarted = true;
+			$scope.displaylife = $scope.life;
 			BlockedFilled = '';
 			$scope.resetTime();
 			$scope.start();	
@@ -100,10 +102,10 @@ app.controller("CardController", function($scope, $timeout) {
 	}
 	// for the timer
 
-	// start the timer as soon as the player presses start
+	// Start time function
 	$scope.start = function(){
 		$scope.board = createGrid();
-		// set the time of 1 minutes and remove the cards guard
+		// Set life to gobal variable 
 		$scope.timeLimit = $scope.timeSec*1000;
 		($scope.startTimer =function() {
 			$scope.timeLimit -= 1000;
@@ -111,13 +113,14 @@ app.controller("CardController", function($scope, $timeout) {
 			timer = $timeout($scope.startTimer, 1000);
 
 			if ($scope.timeLimit === 0) {
-				if($scope.checkStatus() || $scope.gameAttamp){
+				if($scope.checkStatus() || !$scope.displaylife){
 					$scope.stopTimer();
 					$scope.getStarted = false;
 					$scope.result = "loose";
 					//$scope.gameAttamp = true;		
 				}else{
-					$scope.gameAttamp = true;		
+					//$scope.gameAttamp = true;		
+					$scope.displaylife--
 					$scope.stopTimer();
 					$scope.start();
 				}	
@@ -129,7 +132,7 @@ app.controller("CardController", function($scope, $timeout) {
 	$scope.resetTime = function(){
 		$timeout.cancel(timer);
 	}
-
+//  Reset function
 	$scope.reset = function(){
 		$scope.getStarted = false;
 		$scope.result = "quit";
@@ -137,6 +140,7 @@ app.controller("CardController", function($scope, $timeout) {
 		$scope.gridCol = '';
 		$scope.blockFill = '';
 		$scope.timeSec = '';
+		$scope.life = '';
 	}
 
 	// function to stop the timer

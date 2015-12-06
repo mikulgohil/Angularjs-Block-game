@@ -34,13 +34,17 @@
 		    <label for="color">Time in sec</label>
 		    <input type="number" class="form-control" required ng-disabled="getStarted" ng-model="timeSec" placeholder="Selected">
 		  </div>
+		  <div class="form-group">
+		    <label for="color">Life</label>
+		    <input type="number" class="form-control" required ng-disabled="getStarted" ng-model="life" placeholder="Selected">
+		  </div>
 
 		  <button type="submit" class="btn btn-primary" ng-click="init()" ng-disabled="getStarted">Start</button>
 		  <button type="submit" class="btn btn-warning pull-right" ng-disabled="!getStarted" ng-click="reset()">Reset</button>
 		</form> 
 
 		<div class="timer" ng-cloak  ng-show="board" ng-class="{critical:isCritical}">
-			{{timeLimit | date: 'ss'}} 	
+			life: {{displaylife}} | time: {{timeLimit | date: 'ss'}} 	
 		</div>
 		
 		<div class="row" ng-cloak ng-switch on="result">
@@ -62,7 +66,6 @@
 					<div class="card shadow">
 						<div class="front face"></div>
 						<div class="back face text-center pagination-center">
-							
 						</div>
 					</div>
 				</div>
